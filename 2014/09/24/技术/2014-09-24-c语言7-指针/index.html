@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>c语言7-指针 | 阿兴的博客</title>
+  <meta name="description" content="内存我们计算机的所有内存都是线性的，不管是一维数组还是二维数组在内存中都是线性的，内存线性是物理基础（不要问我） 机器的不同，导致指针类型的大小不同，32位机的指针类型是4个字节，64位机的指针大小是8个字节，而位数的多少又影响到地址总线的宽度，导致最大支持的内存大小（内存条），所以32位机支持的最大的内存条是4g，并且4g有一部分被其他硬件占用，所以剩3g多来给用户使用，地址总线越宽，同一时间传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c语言7-指针">
+<meta property="og:url" content="https://ax-codes.github.io/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/index.html">
+<meta property="og:site_name" content="阿兴的博客">
+<meta property="og:description" content="内存我们计算机的所有内存都是线性的，不管是一维数组还是二维数组在内存中都是线性的，内存线性是物理基础（不要问我） 机器的不同，导致指针类型的大小不同，32位机的指针类型是4个字节，64位机的指针大小是8个字节，而位数的多少又影响到地址总线的宽度，导致最大支持的内存大小（内存条），所以32位机支持的最大的内存条是4g，并且4g有一部分被其他硬件占用，所以剩3g多来给用户使用，地址总线越宽，同一时间传">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ax-codes.github.io/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/%E6%8C%87%E9%92%88%E5%81%8F%E7%A7%BB%E6%B3%95.png">
+<meta property="article:published_time" content="2014-09-24T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-09T10:00:01.529Z">
+<meta property="article:author" content="AX Blog">
+<meta property="article:tag" content="c语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ax-codes.github.io/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/%E6%8C%87%E9%92%88%E5%81%8F%E7%A7%BB%E6%B3%95.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://ax-codes.github.io/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="阿兴的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/GuoXingGitHub" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">阿兴</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">阿兴</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-musics">
+          <a href="/musics">
+            
+            <i class="icon icon-zcool"></i>
+            
+            <span class="menu-title">音乐</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于/留言</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">169</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-net-core/" rel="tag">.net/.net core</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/" rel="tag">csharp</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web%E5%89%8D%E7%AB%AF/" rel="tag">web前端</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">其他工具/插件</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">开发工具/插件</a><span class="tag-list-count">54</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" rel="tag">技术随笔</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">效率工具/插件</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" rel="tag">生活随笔</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/net-net-core/" style="font-size: 13.62px;">.net/.net core</a> <a href="/tags/c/" style="font-size: 13.38px;">c++</a> <a href="/tags/csharp/" style="font-size: 13.46px;">csharp</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.85px;">c语言</a> <a href="/tags/docker/" style="font-size: 13.23px;">docker</a> <a href="/tags/js/" style="font-size: 13.92px;">js</a> <a href="/tags/linux/" style="font-size: 13.69px;">linux</a> <a href="/tags/python/" style="font-size: 13.77px;">python</a> <a href="/tags/web%E5%89%8D%E7%AB%AF/" style="font-size: 13.46px;">web前端</a> <a href="/tags/windows/" style="font-size: 13.62px;">windows</a> <a href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.31px;">其他工具/插件</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 14px;">开发工具/插件</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" style="font-size: 13px;">技术随笔</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.54px;">效率工具/插件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.15px;">数据库</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" style="font-size: 13.08px;">生活随笔</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-linux%E4%B8%8B%E6%9F%A5%E7%9C%8BCPU%E7%9A%84%E6%80%BB%E6%A0%B8%E6%95%B0%E4%BB%A5%E5%8F%8A%E9%80%BB%E8%BE%91%E6%A0%B8%E6%95%B0/" class="title">linux下查看CPU的总核数以及逻辑核数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BAmysql%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/" class="title">批量导出mysql多个数据库结构和数据脚本</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/" class="title">编写一个vscode插件</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-07T12:00:00.000Z" itemprop="datePublished">2020-06-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/05/%E6%8A%80%E6%9C%AF/2020-06-05-antd%20webpack%20%E8%BF%90%E8%A1%8C%E6%97%B6%E5%88%87%E6%8D%A2%E4%B8%BB%E9%A2%98/" class="title">antd webpack 运行时切换主题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-05T12:00:00.000Z" itemprop="datePublished">2020-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/25/%E6%8A%80%E6%9C%AF/2020-05-25-ubuntu%E5%AE%89%E8%A3%85airflow/" class="title">ubuntu安装airflow</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-25T12:00:00.000Z" itemprop="datePublished">2020-05-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内存"><span class="toc-number">1.</span> <span class="toc-text">内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十六进制的解释"><span class="toc-number">2.</span> <span class="toc-text">十六进制的解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从大类型转换为小类型数据截取的解释"><span class="toc-number">3.</span> <span class="toc-text">从大类型转换为小类型数据截取的解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指针和地址的区别"><span class="toc-number">4.</span> <span class="toc-text">指针和地址的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义地址-危险"><span class="toc-number">5.</span> <span class="toc-text">自定义地址(危险)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同类型数据加减的问题"><span class="toc-number">6.</span> <span class="toc-text">同类型数据加减的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组和指针的关系"><span class="toc-number">7.</span> <span class="toc-text">数组和指针的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组的首地址和数组元素的首地址之间的关系"><span class="toc-number">8.</span> <span class="toc-text">数组的首地址和数组元素的首地址之间的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指针类型变量的二义性"><span class="toc-number">9.</span> <span class="toc-text">指针类型变量的二义性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#根据指针偏移遍历集合的方法"><span class="toc-number">10.</span> <span class="toc-text">根据指针偏移遍历集合的方法</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-技术/2014-09-24-c语言7-指针" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      c语言7-指针
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/" class="article-date">
+	  <time datetime="2014-09-24T00:00:00.000Z" itemprop="datePublished">2014-09-24</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>我们计算机的所有内存都是线性的，不管是一维数组还是二维数组在内存中都是线性的，内存线性是物理基础（不要问我）</p>
+<p>机器的不同，导致指针类型的大小不同，32位机的指针类型是4个字节，64位机的指针大小是8个字节，而位数的多少又影响到地址总线的宽度，导致最大支持的内存大小（内存条），所以32位机支持的最大的内存条是4g，并且4g有一部分被其他硬件占用，所以剩3g多来给用户使用，地址总线越宽，同一时间传输的地址数据就越多，从而达到同一时间可以让跟多的软件来访问内存，起到同一时间可以运行更多的软件</p>
+<h2 id="十六进制的解释"><a href="#十六进制的解释" class="headerlink" title="十六进制的解释"></a>十六进制的解释</h2><p>一个十六进制位数表示4个二进制位数，我们为一个变量赋一个16进制数和一个10进制数的表达方式是一样的，只不过打出的数据不同，<br>十六进制的读操作：<br>因为我们的电脑是4个二进制对应一位16进制的数，所以我们内存里的一个存储单元可以存储两位16进制的数，并且我们根据指针读数据都是从低位向高位读取，并且每个变量保存的都是首地址，所以:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inta=<span class="number">0x0355</span>;</span><br><span class="line"><span class="keyword">int</span>*a1=(<span class="keyword">int</span>*)&amp;a;<span class="comment">//355</span></span><br><span class="line"><span class="keyword">char</span>*a2=(<span class="keyword">char</span>*)&amp;a;<span class="comment">//55  拿到低位地址 根据类型（寻址能力）向上找到数据后用数据总线返回cpu</span></span><br><span class="line">short*a3=(short*)&amp;a;<span class="comment">//355</span></span><br></pre></td></tr></table></figure><br>0会被忽略</p>
+<h2 id="从大类型转换为小类型数据截取的解释"><a href="#从大类型转换为小类型数据截取的解释" class="headerlink" title="从大类型转换为小类型数据截取的解释"></a>从大类型转换为小类型数据截取的解释</h2><p>我们的数据在内存条中都是线性存储的并且占时的内存大小是从大到小的  但是我们此时的首地址是不变的，只是寻址能能力变化了  例如  int  a=0x12345678 char p=(char)a   printf(“p=%x”); p=78</p>
+<h2 id="指针和地址的区别"><a href="#指针和地址的区别" class="headerlink" title="指针和地址的区别"></a>指针和地址的区别</h2><p>指针是一个有类型的地址，所以我们可以根据地址来设置地址偏移来获取数据<br>备注:我们变量保存的都是首地址（当前数据空间最小的地址），然后根据数据类型来去从首地址拿指定个数的空间数据（因为现在我首地址和类型（空间个数）和每个空间的大小（8位）都确定了 所以我们可以按照规律取出数据）</p>
+<p>*：根据地址取内容  前提要有地址<br>&amp;：根据变量取地址，如果对象是数组的话我们根据他取到的是数组的整体</p>
+<h2 id="自定义地址-危险"><a href="#自定义地址-危险" class="headerlink" title="自定义地址(危险)"></a>自定义地址(危险)</h2><p>直接为一个指针变量赋一个我们自己写的值的画很危险，因为我们随机写的地址可能是系统内核占用的，所以可能影响到系统，所以我们申请内存一般都是需要系统帮我申请，而不是自己随机写地址，一般4g的内存的话 0~3g为用户内存，3g~4g为系统内存，所以3g~4g的地址我们是不能申请的</p>
+<h2 id="同类型数据加减的问题"><a href="#同类型数据加减的问题" class="headerlink" title="同类型数据加减的问题"></a>同类型数据加减的问题</h2><p>同类型相减等于相隔空格数，基本类型除外</p>
+<h2 id="数组和指针的关系"><a href="#数组和指针的关系" class="headerlink" title="数组和指针的关系"></a>数组和指针的关系</h2><p>数组名是个常量  不能修改 不能进行加减计算<br>*p++ 先算++ 再去值<br>一级数组和指针的关系：a+1表示</p>
+<h2 id="数组的首地址和数组元素的首地址之间的关系"><a href="#数组的首地址和数组元素的首地址之间的关系" class="headerlink" title="数组的首地址和数组元素的首地址之间的关系"></a>数组的首地址和数组元素的首地址之间的关系</h2><p>“指针”加数值，加的是该对象对应的数组的步长<br>数组的整体和元素性：对数组加上&amp;就是表述数组的整体性<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">intarr[<span class="number">3</span>][<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>,<span class="number">40</span>,<span class="number">100</span>,<span class="number">200</span>,<span class="number">300</span>,<span class="number">400</span>&#125;; <span class="comment">//T arr[3]</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"arr=%p\n"</span>,arr+<span class="number">1</span>);<span class="comment">//arr的数组的步长为int[4]所以加的是int[4]的字节大小</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr=%p\n"</span>,&amp;arr+<span class="number">1</span>);<span class="comment">//表示数组的整体，所以步长为整个数组，所以加的是整个数组的长度</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr[0]=%p\n"</span>,arr[<span class="number">0</span>]+<span class="number">1</span>);<span class="comment">//arr[0]这里不是表示地址 而是取值 不考虑</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr[0]=%p\n"</span>,&amp;arr[<span class="number">0</span>]+<span class="number">1</span>);<span class="comment">//&amp;arr的数组的步长为int[4]，所以加的是int[4]的字节大小</span></span><br><span class="line">intarr[<span class="number">5</span>]=&#123;<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>,<span class="number">40</span>,<span class="number">50</span>&#125;; </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"arr[0]=%p\n"</span>,arr[<span class="number">0</span>]);<span class="comment">//这里是直接取值  不是指针 不考虑 直接加一</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr[0]=%p\n"</span>,&amp;arr[<span class="number">0</span>]);<span class="comment">//&amp;arr的数组的步长为int所以加上int类型大小</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"arr[0]+1=%p\n"</span>,arr[<span class="number">0</span>]+<span class="number">1</span>);<span class="comment">//</span></span><br><span class="line">这里是直接取值  不是指针 不考虑 直接加一</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr[0]+1=%p\n"</span>,&amp;arr[<span class="number">0</span>]+<span class="number">1</span>);<span class="comment">//</span></span><br><span class="line">&amp;arr的数组的步长为<span class="keyword">int</span>所以加上<span class="keyword">int</span>类型大小</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr+1=%p\n"</span>,&amp;arr+<span class="number">1</span>);<span class="comment">//&amp;考虑的是整体性 直接加上int[5]的类型大小</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr[0]=%p\n"</span>,&amp;arr[<span class="number">0</span>]);<span class="comment">//&amp;arr[0]的数组的步长为int 所以直接加int</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"&amp;arr+1=%p\n"</span>,&amp;arr+<span class="number">1</span>);<span class="comment">//整体  直接加int[4]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="指针类型变量的二义性"><a href="#指针类型变量的二义性" class="headerlink" title="指针类型变量的二义性"></a>指针类型变量的二义性</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p1=&amp;a;   <span class="comment">//p1：表示的是a的地址；&amp;p1表示的是p1变量本身的地址</span></span><br></pre></td></tr></table></figure>
+<h2 id="根据指针偏移遍历集合的方法"><a href="#根据指针偏移遍历集合的方法" class="headerlink" title="根据指针偏移遍历集合的方法"></a>根据指针偏移遍历集合的方法</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[<span class="number">5</span>]=&#123;<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>,<span class="number">40</span>,<span class="number">50</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(inti=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>,arr[i]);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"--------------\n"</span>);</span><br><span class="line"><span class="keyword">for</span>(inti=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>,i[arr]);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"--------------\n"</span>);</span><br><span class="line"><span class="keyword">for</span>(inti=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>,*(arr+i));<span class="comment">//arr+iarr的类型为int所以偏移int的i位</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"--------------\n"</span>);</span><br><span class="line"><span class="keyword">int</span>*p=&amp;arr;</span><br><span class="line"><span class="keyword">for</span>(inti=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>,*p++);<span class="comment">//先算p++结果为*p后++</span></span><br></pre></td></tr></table></figure>
+<p>a[i]=*(a+i)</p>
+<p>*也起到降级别的能力</p>
+<p><img src="/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/指针偏移法.png" alt="指针偏移法"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://ax-codes.github.io/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/" title="c语言7-指针" target="_blank" rel="external">https://ax-codes.github.io/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-c%E8%AF%AD%E8%A8%807-%E6%8C%87%E9%92%88/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/GuoXingGitHub" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/GuoXingGitHub" target="_blank"><span class="text-dark">阿兴</span><small class="ml-1x">阿兴</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY2OC8xMTIwNQ==">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2014/09/24/%E6%8A%80%E6%9C%AF/2014-09-24-linux%20%E6%B5%8B%E8%AF%95%E7%AB%AF%E5%8F%A3%E6%96%B9%E6%B3%95/" title="linux 测试端口方法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2014/09/18/%E6%8A%80%E6%9C%AF/2014-09-18-c%E8%AF%AD%E8%A8%805-%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%8C%E4%B9%89%E6%80%A7/" title="c语言5-数组的二义性"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>

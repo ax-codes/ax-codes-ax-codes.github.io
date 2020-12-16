@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>推荐21个顶级的Vue UI库 | 阿兴的博客</title>
+  <meta name="description" content="前言2018 年的一些最佳 UI 组件 1.VuetifyStar 数为 11K，提供了 80 多个 Vue.js 组件，这些组件是根据谷歌 Material Design 指南实现的。Vuetify 支持所有平台上的浏览器，包括 IE11 和 Safari 9+（使用 polyfill），并提供了 8 个 vue-cli 模板。 地址：https:&#x2F;&#x2F;github.com&#x2F;vuetifyjs&#x2F;v">
+<meta property="og:type" content="article">
+<meta property="og:title" content="推荐21个顶级的Vue UI库">
+<meta property="og:url" content="https://ax-codes.github.io/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-%E6%8E%A8%E8%8D%9021%E4%B8%AA%E9%A1%B6%E7%BA%A7%E7%9A%84Vue%20UI%E5%BA%93/index.html">
+<meta property="og:site_name" content="阿兴的博客">
+<meta property="og:description" content="前言2018 年的一些最佳 UI 组件 1.VuetifyStar 数为 11K，提供了 80 多个 Vue.js 组件，这些组件是根据谷歌 Material Design 指南实现的。Vuetify 支持所有平台上的浏览器，包括 IE11 和 Safari 9+（使用 polyfill），并提供了 8 个 vue-cli 模板。 地址：https:&#x2F;&#x2F;github.com&#x2F;vuetifyjs&#x2F;v">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-02T03:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-09T10:00:01.732Z">
+<meta property="article:author" content="AX Blog">
+<meta property="article:tag" content="web前端">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://ax-codes.github.io/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-%E6%8E%A8%E8%8D%9021%E4%B8%AA%E9%A1%B6%E7%BA%A7%E7%9A%84Vue%20UI%E5%BA%93/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="阿兴的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/GuoXingGitHub" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">阿兴</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">阿兴</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-musics">
+          <a href="/musics">
+            
+            <i class="icon icon-zcool"></i>
+            
+            <span class="menu-title">音乐</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于/留言</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">169</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-net-core/" rel="tag">.net/.net core</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/" rel="tag">csharp</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web%E5%89%8D%E7%AB%AF/" rel="tag">web前端</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">其他工具/插件</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">开发工具/插件</a><span class="tag-list-count">54</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" rel="tag">技术随笔</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">效率工具/插件</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" rel="tag">生活随笔</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/net-net-core/" style="font-size: 13.62px;">.net/.net core</a> <a href="/tags/c/" style="font-size: 13.38px;">c++</a> <a href="/tags/csharp/" style="font-size: 13.46px;">csharp</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.85px;">c语言</a> <a href="/tags/docker/" style="font-size: 13.23px;">docker</a> <a href="/tags/js/" style="font-size: 13.92px;">js</a> <a href="/tags/linux/" style="font-size: 13.69px;">linux</a> <a href="/tags/python/" style="font-size: 13.77px;">python</a> <a href="/tags/web%E5%89%8D%E7%AB%AF/" style="font-size: 13.46px;">web前端</a> <a href="/tags/windows/" style="font-size: 13.62px;">windows</a> <a href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.31px;">其他工具/插件</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 14px;">开发工具/插件</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" style="font-size: 13px;">技术随笔</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.54px;">效率工具/插件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.15px;">数据库</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" style="font-size: 13.08px;">生活随笔</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-linux%E4%B8%8B%E6%9F%A5%E7%9C%8BCPU%E7%9A%84%E6%80%BB%E6%A0%B8%E6%95%B0%E4%BB%A5%E5%8F%8A%E9%80%BB%E8%BE%91%E6%A0%B8%E6%95%B0/" class="title">linux下查看CPU的总核数以及逻辑核数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BAmysql%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/" class="title">批量导出mysql多个数据库结构和数据脚本</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/" class="title">编写一个vscode插件</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-07T12:00:00.000Z" itemprop="datePublished">2020-06-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/05/%E6%8A%80%E6%9C%AF/2020-06-05-antd%20webpack%20%E8%BF%90%E8%A1%8C%E6%97%B6%E5%88%87%E6%8D%A2%E4%B8%BB%E9%A2%98/" class="title">antd webpack 运行时切换主题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-05T12:00:00.000Z" itemprop="datePublished">2020-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/25/%E6%8A%80%E6%9C%AF/2020-05-25-ubuntu%E5%AE%89%E8%A3%85airflow/" class="title">ubuntu安装airflow</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-25T12:00:00.000Z" itemprop="datePublished">2020-05-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Vuetify"><span class="toc-number">2.</span> <span class="toc-text">1.Vuetify</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Quasar"><span class="toc-number">3.</span> <span class="toc-text">2.Quasar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Element"><span class="toc-number">4.</span> <span class="toc-text">3.Element</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Vue-Material"><span class="toc-number">5.</span> <span class="toc-text">4. Vue Material</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Keen-UI"><span class="toc-number">6.</span> <span class="toc-text">5.Keen-UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Buefy"><span class="toc-number">7.</span> <span class="toc-text">6. Buefy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Bootstrap-Vue"><span class="toc-number">8.</span> <span class="toc-text">7. Bootstrap Vue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-Muse-UI"><span class="toc-number">9.</span> <span class="toc-text">8. Muse-UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-AT-UI"><span class="toc-number">10.</span> <span class="toc-text">9. AT-UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-Vux"><span class="toc-number">11.</span> <span class="toc-text">10. Vux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-iView"><span class="toc-number">12.</span> <span class="toc-text">11. iView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-Uiv"><span class="toc-number">13.</span> <span class="toc-text">12. Uiv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-Vuikit"><span class="toc-number">14.</span> <span class="toc-text">13. Vuikit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-Onsen-UI-Vue"><span class="toc-number">15.</span> <span class="toc-text">14.Onsen UI+Vue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-Semantic-UI-Vue"><span class="toc-number">16.</span> <span class="toc-text">15.Semantic UI+Vue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-Fish-UI"><span class="toc-number">17.</span> <span class="toc-text">16. Fish-UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-Mint-UI"><span class="toc-number">18.</span> <span class="toc-text">17.Mint UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#18-Framework7-Vue"><span class="toc-number">19.</span> <span class="toc-text">18.Framework7 Vue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#19-Cube-UI"><span class="toc-number">20.</span> <span class="toc-text">19.Cube UI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#20-Vueblu"><span class="toc-number">21.</span> <span class="toc-text">20. Vueblu</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#21-Ant-Design-Vue"><span class="toc-number">22.</span> <span class="toc-text">21.Ant Design Vue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特别推荐"><span class="toc-number">23.</span> <span class="toc-text">特别推荐</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-技术/2019-01-02-推荐21个顶级的Vue UI库" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      推荐21个顶级的Vue UI库
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-%E6%8E%A8%E8%8D%9021%E4%B8%AA%E9%A1%B6%E7%BA%A7%E7%9A%84Vue%20UI%E5%BA%93/" class="article-date">
+	  <time datetime="2019-01-02T03:00:00.000Z" itemprop="datePublished">2019-01-02</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/js/" rel="tag">js</a>, <a class="article-tag-link" href="/tags/web%E5%89%8D%E7%AB%AF/" rel="tag">web前端</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-%E6%8E%A8%E8%8D%9021%E4%B8%AA%E9%A1%B6%E7%BA%A7%E7%9A%84Vue%20UI%E5%BA%93/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>2018 年的一些最佳 UI 组件</p>
+<h3 id="1-Vuetify"><a href="#1-Vuetify" class="headerlink" title="1.Vuetify"></a>1.Vuetify</h3><p>Star 数为 11K，提供了 80 多个 Vue.js 组件，这些组件是根据谷歌 Material Design 指南实现的。Vuetify 支持所有平台上的浏览器，包括 IE11 和 Safari 9+（使用 polyfill），并提供了 8 个 vue-cli 模板。</p>
+<p>地址：<a href="https://github.com/vuetifyjs/vuetify" target="_blank" rel="noopener">https://github.com/vuetifyjs/vuetify</a></p>
+<h3 id="2-Quasar"><a href="#2-Quasar" class="headerlink" title="2.Quasar"></a>2.Quasar</h3><p>Star 数超过 6K，是构建 Vue.js 响应式网站、PWA、混合移动应用和 Electron 应用的流行框架。Quasar 还支持诸如 HTML/CSS/JS 压缩、缓存清除、摇树优化（tree shaking）、源映射、代码分割和延迟加载、ES6 转码等功能。</p>
+<p>地址：<a href="https://github.com/quasarframework/quasar" target="_blank" rel="noopener">https://github.com/quasarframework/quasar</a></p>
+<h3 id="3-Element"><a href="#3-Element" class="headerlink" title="3.Element"></a>3.Element</h3><p>Star 数将近 28K，是一款面向 Web 的 Vue.js 2.0 UI 工具包。它拥有一个强大的社区和 350 个贡献者，提供了丰富的可定制组件，以及完整的样式指南和更多的资源。</p>
+<p>地址：<a href="https://github.com/ElemeFE/element" target="_blank" rel="noopener">https://github.com/ElemeFE/element</a></p>
+<h3 id="4-Vue-Material"><a href="#4-Vue-Material" class="headerlink" title="4. Vue Material"></a>4. Vue Material</h3><p>Star 数差不多 6K，是一个实了谷歌 Material Design 的简单库。该库还提供了一个 webpack 样板、用于 Nuxt.js 的 SSR 模板和一个单独的 HTML 文件（通过这个文件开始使用框架）。这里有一些入门的例子 <a href="https://codesandbox.io/s/github/vuematerial/examples/tree/master/examples/quick-start。" target="_blank" rel="noopener">https://codesandbox.io/s/github/vuematerial/examples/tree/master/examples/quick-start。</a></p>
+<p>地址：<a href="https://github.com/vuematerial/vue-material" target="_blank" rel="noopener">https://github.com/vuematerial/vue-material</a></p>
+<h3 id="5-Keen-UI"><a href="#5-Keen-UI" class="headerlink" title="5.Keen-UI"></a>5.Keen-UI</h3><p>Star 数将近 3.5 K，一组 Vue 组件的集合，在设计上受到了谷歌 Material Design 的启发。Keen-UI 并不是一个 CSS 框架，它不包含网格系统、排版样式等。相反，它关注的是基于 Javascript 的交互式组件。</p>
+<p>地址：<a href="https://github.com/JosephusPaye/Keen-UI" target="_blank" rel="noopener">https://github.com/JosephusPaye/Keen-UI</a></p>
+<h3 id="6-Buefy"><a href="#6-Buefy" class="headerlink" title="6. Buefy"></a>6. Buefy</h3><p>Star 数 3K 左右，基于 Bulma（<a href="https://bulma.io）提供了一组轻量级的" target="_blank" rel="noopener">https://bulma.io）提供了一组轻量级的</a> UI 组件。Vue.js 和 Bulma 是这个库唯一的两个内部依赖。它的大小约为 60KB（压缩后的大小，并且包含了 Bulma）。你可以查看实时文档网站（<a href="https://buefy.github.io/#/documentation/start）并在" target="_blank" rel="noopener">https://buefy.github.io/#/documentation/start）并在</a> Codepen 上运行代码。</p>
+<p>地址：<a href="https://github.com/buefy/buefy" target="_blank" rel="noopener">https://github.com/buefy/buefy</a></p>
+<h3 id="7-Bootstrap-Vue"><a href="#7-Bootstrap-Vue" class="headerlink" title="7. Bootstrap Vue"></a>7. Bootstrap Vue</h3><p>Star 数超过 5K，为 Vue.js 提供了 Bootstrap 4 组件和网格系统的实现，并提供了自动 WAI-ARIA 可访问性标记。</p>
+<p>地址：<a href="https://github.com/bootstrap-vue/bootstrap-vue" target="_blank" rel="noopener">https://github.com/bootstrap-vue/bootstrap-vue</a></p>
+<h3 id="8-Muse-UI"><a href="#8-Muse-UI" class="headerlink" title="8. Muse-UI"></a>8. Muse-UI</h3><p>Star 数超过 6K，是另一个 Vue 2.0 MD 库，提供了 40 多个 UI 组件和可定制主题。文档主要使用中文撰写，不过大多数组件是自解释的，文档只起到辅助作用。该项目在积极的开发和维护当中。</p>
+<p>地址：<a href="https://github.com/museui/muse-ui" target="_blank" rel="noopener">https://github.com/museui/muse-ui</a></p>
+<h3 id="9-AT-UI"><a href="#9-AT-UI" class="headerlink" title="9. AT-UI"></a>9. AT-UI</h3><p>Star 数接近 1.5 K，一个模块化的前端 UI 框架，用于开发基于 Vue.js 的 Web 界面，适用于桌面应用程序。它提供了 NPM+Webpack+Babel 的前端开发工作流和独立的 CSS 样式，值得一试。</p>
+<p>地址：<a href="https://github.com/at-ui/at-ui" target="_blank" rel="noopener">https://github.com/at-ui/at-ui</a></p>
+<h3 id="10-Vux"><a href="#10-Vux" class="headerlink" title="10. Vux"></a>10. Vux</h3><p>Star 数超过 13K，是一个流行的社区库，基于 WeUI 和 Vue 2.0。该库还支持 webpack+vue-loader+vux 的工作流。它的文档也是中文的。</p>
+<p>地址：<a href="https://github.com/airyland/vux" target="_blank" rel="noopener">https://github.com/airyland/vux</a></p>
+<h3 id="11-iView"><a href="#11-iView" class="headerlink" title="11. iView"></a>11. iView</h3><p>Star 数将近 16K，提供了数十种用 Vue.js 构建的 UI 组件和小部件，并采用了干净而优雅的设计。iView 被广泛采用，社区也在积极维护，并提供了 CLI 工具用于以可视化的方式创建项目。这个也值得一试。</p>
+<p>地址：<a href="https://github.com/iview/iview" target="_blank" rel="noopener">https://github.com/iview/iview</a></p>
+<h3 id="12-Uiv"><a href="#12-Uiv" class="headerlink" title="12. Uiv"></a>12. Uiv</h3><p>Star 数“仅”550 左右，用于 Vue 2 的 Bootstrap 3 组件库。所有组件加起来差不多 20KB，唯一的外部依赖是 Vue 和 bootstrap css，支持基于 Webpack 的工作流。</p>
+<p>地址：<a href="https://github.com/wxsms/uiv" target="_blank" rel="noopener">https://github.com/wxsms/uiv</a></p>
+<h3 id="13-Vuikit"><a href="#13-Vuikit" class="headerlink" title="13. Vuikit"></a>13. Vuikit</h3><p>Star 数 1K 左右，一个用于网站界面的响应式的 Vue UI 库，设计风格干净而统一。该库作为由 Yarn 工作区管理的“monorepo”而构建，但图标和主题可作为单独的包发布。</p>
+<p>地址：<a href="https://github.com/vuikit/vuikit" target="_blank" rel="noopener">https://github.com/vuikit/vuikit</a></p>
+<h3 id="14-Onsen-UI-Vue"><a href="#14-Onsen-UI-Vue" class="headerlink" title="14.Onsen UI+Vue"></a>14.Onsen UI+Vue</h3><p>基于流行的 Onsen-UI 框架，封装了核心 Web 组件并暴露了 Vue 风格的 API。Onsen UI 组件也被设计为能够主动对 prop 做出反应。</p>
+<p>地址：<a href="https://onsen.io/v2/guide/vue/" target="_blank" rel="noopener">https://onsen.io/v2/guide/vue/</a></p>
+<h3 id="15-Semantic-UI-Vue"><a href="#15-Semantic-UI-Vue" class="headerlink" title="15.Semantic UI+Vue"></a>15.Semantic UI+Vue</h3><p>这个项目基本上是 Semantic-UI 框架与 Vue.js 的集成。该库仍在开发当中，提供了一个类似于 Semantic-UI 的 API 以及一组可定制的主题。</p>
+<p>地址：<a href="https://semantic-ui-vue.github.io/" target="_blank" rel="noopener">https://semantic-ui-vue.github.io/</a></p>
+<h3 id="16-Fish-UI"><a href="#16-Fish-UI" class="headerlink" title="16. Fish-UI"></a>16. Fish-UI</h3><p>Star 数“仅”为 500 左右，贡献者也只有 3 个，但 fish-ui 提供了一个基于 Vue 的 Web 工具包，其中包含整洁干净的组件。该库支持 ES2015+Webpack 工作流。它的文档不是很全，但它的设计不容忽视。</p>
+<p>地址：<a href="https://github.com/myliang/fish-ui" target="_blank" rel="noopener">https://github.com/myliang/fish-ui</a></p>
+<h3 id="17-Mint-UI"><a href="#17-Mint-UI" class="headerlink" title="17.Mint UI"></a>17.Mint UI</h3><p>Star 数超过 11K，为 Vue.js 提供 UI 元素，提供了用于构建移动应用程序的 CSS 和 JS 组件。当全部导入时，压缩后的代码只有月 30KB（JS+CSS），当然它也支持单个组件的导入。</p>
+<p>地址：<a href="https://github.com/ElemeFE/mint-ui/" target="_blank" rel="noopener">https://github.com/ElemeFE/mint-ui/</a></p>
+<h3 id="18-Framework7-Vue"><a href="#18-Framework7-Vue" class="headerlink" title="18.Framework7 Vue"></a>18.Framework7 Vue</h3><p>这个集成提供了几乎所有的 Framework7 元素和组件，并集成了 Framework7 Router，按照 Vue 的方式来渲染页面。该库正处于积极的开发和维护当中。</p>
+<p>地址：<a href="https://framework7.io/vue/" target="_blank" rel="noopener">https://framework7.io/vue/</a></p>
+<h3 id="19-Cube-UI"><a href="#19-Cube-UI" class="headerlink" title="19.Cube UI"></a>19.Cube UI</h3><p>Star 数超过 3K，是用于 Vue.js 移动应用程序的 UI 组件库。所有组件都经过了单元测试，并且该库还支持按需进行后期编译和组件导入。这个库仍在积极开发中。</p>
+<p>地址：<a href="https://github.com/didi/cube-ui" target="_blank" rel="noopener">https://github.com/didi/cube-ui</a></p>
+<h3 id="20-Vueblu"><a href="#20-Vueblu" class="headerlink" title="20. Vueblu"></a>20. Vueblu</h3><p>Star 数约 1.5K，是基于 Vue 2.0 和 Bulma 的 UI 组件库，用于构建中台和后台办公产品。它支持 ES2015 和 NPM+Webpack+Babel 工作流，并提供可自定义主题。</p>
+<p>地址：<a href="https://github.com/chenz24/vue-blu" target="_blank" rel="noopener">https://github.com/chenz24/vue-blu</a></p>
+<h3 id="21-Ant-Design-Vue"><a href="#21-Ant-Design-Vue" class="headerlink" title="21.Ant Design Vue"></a>21.Ant Design Vue</h3><p>Star 数约 1.5K，用于开发具有数十个 Ant Design 实现组件的企业级后端产品，并支持基于 Webpack 调试的构建解决方案（支持 ES6）。请注意，它的开发已经停止了一段时间。</p>
+<p>地址：<a href="https://github.com/okoala/vue-antd" target="_blank" rel="noopener">https://github.com/okoala/vue-antd</a></p>
+<h3 id="特别推荐"><a href="#特别推荐" class="headerlink" title="特别推荐"></a>特别推荐</h3><p>n3-components ：</p>
+<p><a href="https://github.com/N3-components/N3-components" target="_blank" rel="noopener">https://github.com/N3-components/N3-components</a></p>
+<p>vuikit：</p>
+<p><a href="https://vuikit.js.org/" target="_blank" rel="noopener">https://vuikit.js.org/</a></p>
+<p>Kendu UI Vue</p>
+<p><a href="https://www.telerik.com/kendo-vue-ui" target="_blank" rel="noopener">https://www.telerik.com/kendo-vue-ui</a></p>
+<p>Office Fabric-Vue</p>
+<p><a href="https://github.com/aidewoode/office-ui-fabric-vue" target="_blank" rel="noopener">https://github.com/aidewoode/office-ui-fabric-vue</a></p>
+<p>vuestrap</p>
+<p><a href="http://kzima.github.io/vuestrap-base-components/#/" target="_blank" rel="noopener">http://kzima.github.io/vuestrap-base-components/#/</a></p>
+<p>vueboot</p>
+<p><a href="http://morgul.github.io/vueboot/" target="_blank" rel="noopener">http://morgul.github.io/vueboot/</a></p>
+<p>framevuerk</p>
+<p><a href="http://framevuerk.com/" target="_blank" rel="noopener">http://framevuerk.com/</a></p>
+<p>Vue WeUI</p>
+<p><a href="http://aidenzou.github.io/vue-weui/#!/" target="_blank" rel="noopener">http://aidenzou.github.io/vue-weui/#!/</a></p>
+<p>Vue-MDC</p>
+<p><a href="https://github.com/posva/vue-mdc" target="_blank" rel="noopener">https://github.com/posva/vue-mdc</a></p>
+<blockquote>
+<p>原文转自:<a href="https://hackernoon.com/21-top-vue-js-ui-libraries-for-your-app-4556e5a9060e" target="_blank" rel="noopener">https://hackernoon.com/21-top-vue-js-ui-libraries-for-your-app-4556e5a9060e</a></p>
+</blockquote>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://ax-codes.github.io/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-%E6%8E%A8%E8%8D%9021%E4%B8%AA%E9%A1%B6%E7%BA%A7%E7%9A%84Vue%20UI%E5%BA%93/" title="推荐21个顶级的Vue UI库" target="_blank" rel="external">https://ax-codes.github.io/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-%E6%8E%A8%E8%8D%9021%E4%B8%AA%E9%A1%B6%E7%BA%A7%E7%9A%84Vue%20UI%E5%BA%93/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/GuoXingGitHub" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/GuoXingGitHub" target="_blank"><span class="text-dark">阿兴</span><small class="ml-1x">阿兴</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY2OC8xMTIwNQ==">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-webpack%E6%8F%90%E7%A4%BACannot%20read%20property%20%E2%80%98properties%E2%80%99%20of%20undefined%E9%94%99%E8%AF%AF/" title="webpack提示Cannot read property ‘properties’ of undefined错误"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/12/26/%E6%8A%80%E6%9C%AF/2018-12-26-windows%20%E5%AE%BF%E4%B8%BB%E6%9C%BA%E5%99%A8ssh%E8%BF%9E%E6%8E%A5%E5%88%B0docker%E9%95%9C%E5%83%8F/" title="windows 宿主机器ssh连接到docker镜像"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>

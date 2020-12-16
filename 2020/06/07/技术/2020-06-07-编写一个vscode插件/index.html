@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>编写一个vscode插件 | 阿兴的博客</title>
+  <meta name="description" content="前言vscode 作为现在一个应用最广泛和最强大的 ide 之一,有时候我们需要自己定制一些插件来提高我们的工作效率;这里我已经开发了一个用于 hexo 的自动生成粘贴图片的插件,踩了一点坑,这里特意记录下来插件地址:https:&#x2F;&#x2F;github.com&#x2F;ax-codes&#x2F;hexo-paste 官方 api 文档:https:&#x2F;&#x2F;code.visualstudio.com&#x2F;api更加详细的中文文档">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编写一个vscode插件">
+<meta property="og:url" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="阿兴的博客">
+<meta property="og:description" content="前言vscode 作为现在一个应用最广泛和最强大的 ide 之一,有时候我们需要自己定制一些插件来提高我们的工作效率;这里我已经开发了一个用于 hexo 的自动生成粘贴图片的插件,踩了一点坑,这里特意记录下来插件地址:https:&#x2F;&#x2F;github.com&#x2F;ax-codes&#x2F;hexo-paste 官方 api 文档:https:&#x2F;&#x2F;code.visualstudio.com&#x2F;api更加详细的中文文档">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/84e939f3-e6e9-4ecd-853c-c7868d55e269.png">
+<meta property="og:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/223dd58e-0469-4767-9bae-6d2431595a61.png">
+<meta property="og:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/d338a43b-f876-4cd1-893e-822624a558a3.png">
+<meta property="og:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/ab558c75-0384-4f26-b1db-a6b83944b213.png">
+<meta property="og:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/29a56432-a80a-43e1-b80c-28b5c3623822.png">
+<meta property="og:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/d49f30ff-7358-41e0-968c-7be0a0fc2c06.png">
+<meta property="og:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/22b6bf6a-3aa5-424f-bff6-f8d9fad76706.png">
+<meta property="article:published_time" content="2020-06-07T12:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-10T06:39:03.100Z">
+<meta property="article:author" content="AX Blog">
+<meta property="article:tag" content="开发工具&#x2F;插件">
+<meta property="article:tag" content="效率工具&#x2F;插件">
+<meta property="article:tag" content="其他工具&#x2F;插件">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/84e939f3-e6e9-4ecd-853c-c7868d55e269.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="阿兴的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/GuoXingGitHub" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">阿兴</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">阿兴</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-musics">
+          <a href="/musics">
+            
+            <i class="icon icon-zcool"></i>
+            
+            <span class="menu-title">音乐</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于/留言</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">169</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-net-core/" rel="tag">.net/.net core</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/" rel="tag">csharp</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web%E5%89%8D%E7%AB%AF/" rel="tag">web前端</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">其他工具/插件</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">开发工具/插件</a><span class="tag-list-count">54</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" rel="tag">技术随笔</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">效率工具/插件</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" rel="tag">生活随笔</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/net-net-core/" style="font-size: 13.62px;">.net/.net core</a> <a href="/tags/c/" style="font-size: 13.38px;">c++</a> <a href="/tags/csharp/" style="font-size: 13.46px;">csharp</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.85px;">c语言</a> <a href="/tags/docker/" style="font-size: 13.23px;">docker</a> <a href="/tags/js/" style="font-size: 13.92px;">js</a> <a href="/tags/linux/" style="font-size: 13.69px;">linux</a> <a href="/tags/python/" style="font-size: 13.77px;">python</a> <a href="/tags/web%E5%89%8D%E7%AB%AF/" style="font-size: 13.46px;">web前端</a> <a href="/tags/windows/" style="font-size: 13.62px;">windows</a> <a href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.31px;">其他工具/插件</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 14px;">开发工具/插件</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" style="font-size: 13px;">技术随笔</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.54px;">效率工具/插件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.15px;">数据库</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" style="font-size: 13.08px;">生活随笔</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-linux%E4%B8%8B%E6%9F%A5%E7%9C%8BCPU%E7%9A%84%E6%80%BB%E6%A0%B8%E6%95%B0%E4%BB%A5%E5%8F%8A%E9%80%BB%E8%BE%91%E6%A0%B8%E6%95%B0/" class="title">linux下查看CPU的总核数以及逻辑核数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BAmysql%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/" class="title">批量导出mysql多个数据库结构和数据脚本</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/" class="title">编写一个vscode插件</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-07T12:00:00.000Z" itemprop="datePublished">2020-06-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/05/%E6%8A%80%E6%9C%AF/2020-06-05-antd%20webpack%20%E8%BF%90%E8%A1%8C%E6%97%B6%E5%88%87%E6%8D%A2%E4%B8%BB%E9%A2%98/" class="title">antd webpack 运行时切换主题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-05T12:00:00.000Z" itemprop="datePublished">2020-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/25/%E6%8A%80%E6%9C%AF/2020-05-25-ubuntu%E5%AE%89%E8%A3%85airflow/" class="title">ubuntu安装airflow</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-25T12:00:00.000Z" itemprop="datePublished">2020-05-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环境"><span class="toc-number">2.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开发语言"><span class="toc-number">3.</span> <span class="toc-text">开发语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-vscode-插件脚手架和打包工具"><span class="toc-number">4.</span> <span class="toc-text">安装 vscode 插件脚手架和打包工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用脚手架生成框架"><span class="toc-number">5.</span> <span class="toc-text">使用脚手架生成框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#package-json-文件描述"><span class="toc-number">5.1.</span> <span class="toc-text">package.json 文件描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#extension-ts-文件描述"><span class="toc-number">5.2.</span> <span class="toc-text">extension.ts 文件描述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打包"><span class="toc-number">6.</span> <span class="toc-text">打包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#提示没有修改-README-md-文件报错"><span class="toc-number">6.1.</span> <span class="toc-text">提示没有修改 README.md 文件报错</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#解决"><span class="toc-number">6.1.1.</span> <span class="toc-text">解决</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#icon-报错"><span class="toc-number">6.2.</span> <span class="toc-text">icon 报错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决-1"><span class="toc-number">6.3.</span> <span class="toc-text">解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#打包成功和安装"><span class="toc-number">6.4.</span> <span class="toc-text">打包成功和安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#备注"><span class="toc-number">6.5.</span> <span class="toc-text">备注</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#默认生成的-package-json-里没有-publisher-需要加上-如果要发布到应用市场的话-这个名字必须与发布者一致"><span class="toc-number">6.5.1.</span> <span class="toc-text">默认生成的 package.json 里没有 publisher,需要加上,如果要发布到应用市场的话,这个名字必须与发布者一致</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-技术/2020-06-07-编写一个vscode插件" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      编写一个vscode插件
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/" class="article-date">
+	  <time datetime="2020-06-07T12:00:00.000Z" itemprop="datePublished">2020-06-07</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/js/" rel="tag">js</a>, <a class="article-tag-link" href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">其他工具/插件</a>, <a class="article-tag-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">开发工具/插件</a>, <a class="article-tag-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">效率工具/插件</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>vscode 作为现在一个应用最广泛和最强大的 ide 之一,有时候我们需要自己定制一些插件来提高我们的工作效率;<br>这里我已经开发了一个用于 hexo 的自动生成粘贴图片的插件,踩了一点坑,这里特意记录下来<br>插件地址:<a href="https://github.com/ax-codes/hexo-paste" target="_blank" rel="noopener">https://github.com/ax-codes/hexo-paste</a></p>
+<p>官方 api 文档:<a href="https://code.visualstudio.com/api" target="_blank" rel="noopener">https://code.visualstudio.com/api</a><br>更加详细的中文文档:<a href="https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html(作者还一篇谷歌插件开发文章:http://blog.haoji.me/chrome-plugin-develop.html#da-bao-yu-fa-bu)" target="_blank" rel="noopener">https://www.cnblogs.com/liuxianan/p/vscode-plugin-overview.html(作者还一篇谷歌插件开发文章:http://blog.haoji.me/chrome-plugin-develop.html#da-bao-yu-fa-bu)</a><br>我的 demo 例子:<a href="https://github.com/ax-codes/hexo-paste" target="_blank" rel="noopener">https://github.com/ax-codes/hexo-paste</a></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>mac<br>vscode<br>nodejs</p>
+<h3 id="开发语言"><a href="#开发语言" class="headerlink" title="开发语言"></a>开发语言</h3><p>typescript</p>
+<h3 id="安装-vscode-插件脚手架和打包工具"><a href="#安装-vscode-插件脚手架和打包工具" class="headerlink" title="安装 vscode 插件脚手架和打包工具"></a>安装 vscode 插件脚手架和打包工具</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g yo generator-code</span><br><span class="line">npm i vsce -g</span><br></pre></td></tr></table></figure>
+<h3 id="使用脚手架生成框架"><a href="#使用脚手架生成框架" class="headerlink" title="使用脚手架生成框架"></a>使用脚手架生成框架</h3><p>执行下面命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yo code</span><br></pre></td></tr></table></figure>
+<p>可以看到生成下面框架<br><img src="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/84e939f3-e6e9-4ecd-853c-c7868d55e269.png" alt="84e939f3-e6e9-4ecd-853c-c7868d55e269"></p>
+<h4 id="package-json-文件描述"><a href="#package-json-文件描述" class="headerlink" title="package.json 文件描述"></a>package.json 文件描述</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">//插件的名字,应全部小写,不能有空格</span></span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"hexo-paste"</span>,</span><br><span class="line">  <span class="comment">//插件别名,支持中文</span></span><br><span class="line">  <span class="attr">"displayName"</span>: <span class="string">"hexo-paste"</span>,</span><br><span class="line">  <span class="comment">//描述</span></span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="comment">//关键字,用作应用市场搜索</span></span><br><span class="line">  <span class="attr">"keywords"</span>: [<span class="string">"hexo"</span>, <span class="string">"plugin"</span>, <span class="string">"vscode"</span>],</span><br><span class="line">  <span class="comment">//版本</span></span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="comment">//表示该插件适配的最低vscode版本</span></span><br><span class="line">  <span class="attr">"engines"</span>: &#123;</span><br><span class="line">    <span class="attr">"vscode"</span>: <span class="string">"^1.45.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//插件应用市场分类,可选值： [Programming Languages, Snippets, Linters, Themes, Debuggers, Formatters, Keymaps, SCM Providers, Other, Extension Packs, Language Packs]</span></span><br><span class="line">  <span class="attr">"categories"</span>: [<span class="string">"Other"</span>],</span><br><span class="line">  <span class="comment">//发布者,如果要发布到应用市场的话,这个名字必须与发布者一致</span></span><br><span class="line">  <span class="attr">"publisher"</span>: <span class="string">"ax-codes"</span>,</span><br><span class="line">  <span class="comment">//图标 需要带上下面的reponsitory,不然会报这个错‘An icon requires a repository with HTTPS protocol to be specified in this package.json.’</span></span><br><span class="line">  <span class="attr">"icon"</span>: <span class="string">"res/logo.png"</span>,</span><br><span class="line">  <span class="attr">"repository"</span>: &#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"git"</span>,</span><br><span class="line">    <span class="attr">"url"</span>: <span class="string">"https://github.com/ax-codes/hexo-paste"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//激活事件</span></span><br><span class="line">  <span class="attr">"activationEvents"</span>: [</span><br><span class="line">    <span class="string">"onCommand:extension.pasteImage"</span>, <span class="comment">//直接执行命令</span></span><br><span class="line">    <span class="string">"onLanguage:markdown"</span> <span class="comment">//定义需要执行插件逻辑的语言 可以js py...</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="comment">//插件的主入口</span></span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"./out/extension.js"</span>,</span><br><span class="line">  <span class="comment">//插件配置项</span></span><br><span class="line">  <span class="attr">"contributes"</span>: &#123;</span><br><span class="line">    <span class="comment">//直接执行命令</span></span><br><span class="line">    <span class="attr">"commands"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"command"</span>: <span class="string">"extension.pasteImage"</span>,</span><br><span class="line">        <span class="attr">"title"</span>: <span class="string">"Paste Image"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">//快捷键命令</span></span><br><span class="line">    <span class="attr">"keybindings"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"command"</span>: <span class="string">"extension.pasteImage"</span>,</span><br><span class="line">        <span class="attr">"key"</span>: <span class="string">"ctrl+alt+v"</span>,</span><br><span class="line">        <span class="attr">"mac"</span>: <span class="string">"cmd+alt+v"</span>,</span><br><span class="line">        <span class="attr">"when"</span>: <span class="string">"editorTextFocus &amp;&amp; editorLangId == markdown"</span> <span class="comment">//表示文件编辑并且必须要是markdown才回处理</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"vscode:prepublish"</span>: <span class="string">"yarn run compile"</span>,</span><br><span class="line">    <span class="attr">"compile"</span>: <span class="string">"tsc -p ./"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"eslint src --ext ts"</span>,</span><br><span class="line">    <span class="attr">"watch"</span>: <span class="string">"tsc -watch -p ./"</span>,</span><br><span class="line">    <span class="attr">"pretest"</span>: <span class="string">"yarn run compile &amp;&amp; yarn run lint"</span>,</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"node ./out/test/runTest.js"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"@types/glob"</span>: <span class="string">"^7.1.1"</span>,</span><br><span class="line">    <span class="attr">"@types/mocha"</span>: <span class="string">"^7.0.2"</span>,</span><br><span class="line">    <span class="attr">"@types/node"</span>: <span class="string">"^13.11.0"</span>,</span><br><span class="line">    <span class="attr">"@types/vscode"</span>: <span class="string">"^1.45.0"</span>,</span><br><span class="line">    <span class="attr">"@typescript-eslint/eslint-plugin"</span>: <span class="string">"^2.30.0"</span>,</span><br><span class="line">    <span class="attr">"@typescript-eslint/parser"</span>: <span class="string">"^2.30.0"</span>,</span><br><span class="line">    <span class="attr">"eslint"</span>: <span class="string">"^6.8.0"</span>,</span><br><span class="line">    <span class="attr">"glob"</span>: <span class="string">"^7.1.6"</span>,</span><br><span class="line">    <span class="attr">"mocha"</span>: <span class="string">"^7.1.2"</span>,</span><br><span class="line">    <span class="attr">"typescript"</span>: <span class="string">"^3.8.3"</span>,</span><br><span class="line">    <span class="attr">"vscode-test"</span>: <span class="string">"^1.3.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"@types/fs-extra"</span>: <span class="string">"^9.0.1"</span>,</span><br><span class="line">    <span class="attr">"@types/uuid"</span>: <span class="string">"^8.0.0"</span>,</span><br><span class="line">    <span class="attr">"fs-extra"</span>: <span class="string">"^9.0.1"</span>,</span><br><span class="line">    <span class="attr">"moment"</span>: <span class="string">"^2.26.0"</span>,</span><br><span class="line">    <span class="attr">"upath"</span>: <span class="string">"^1.2.0"</span>,</span><br><span class="line">    <span class="attr">"uuid"</span>: <span class="string">"^8.1.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="extension-ts-文件描述"><a href="#extension-ts-文件描述" class="headerlink" title="extension.ts 文件描述"></a>extension.ts 文件描述</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// this method is called when your extension is activated</span></span><br><span class="line"><span class="comment">// your extension is activated the very first time the command is executed</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">activate</span>(<span class="params">context: vscode.ExtensionContext</span>) </span>&#123;</span><br><span class="line">  Logger.channel = vscode.window.createOutputChannel(<span class="string">"PasteImage"</span>);</span><br><span class="line">  context.subscriptions.push(Logger.channel);</span><br><span class="line">  Logger.log(</span><br><span class="line">    <span class="string">'Congratulations, your extension "vscode-paste-image" is now active!'</span></span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The command has been defined in the package.json file</span></span><br><span class="line">  <span class="comment">// Now provide the implementation of the command with registerCommand</span></span><br><span class="line">  <span class="comment">// The commandId parameter must match the command field in package.json</span></span><br><span class="line">  <span class="keyword">let</span> disposable = vscode.commands.registerCommand(</span><br><span class="line">    <span class="string">"extension.pasteImage"</span>,</span><br><span class="line">    () =&gt; &#123;</span><br><span class="line">      <span class="comment">//命令执行处理逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  context.subscriptions.push(disposable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vsce package</span><br></pre></td></tr></table></figure>
+<h4 id="提示没有修改-README-md-文件报错"><a href="#提示没有修改-README-md-文件报错" class="headerlink" title="提示没有修改 README.md 文件报错"></a>提示没有修改 README.md 文件报错</h4><p><img src="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/223dd58e-0469-4767-9bae-6d2431595a61.png" alt="223dd58e-0469-4767-9bae-6d2431595a61"></p>
+<h5 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h5><p>修改对应的 markdown 描述<br><img src="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/d338a43b-f876-4cd1-893e-822624a558a3.png" alt="d338a43b-f876-4cd1-893e-822624a558a3"></p>
+<h4 id="icon-报错"><a href="#icon-报错" class="headerlink" title="icon 报错"></a>icon 报错</h4><p><img src="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/ab558c75-0384-4f26-b1db-a6b83944b213.png" alt="ab558c75-0384-4f26-b1db-a6b83944b213"></p>
+<h4 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h4><p><img src="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/29a56432-a80a-43e1-b80c-28b5c3623822.png" alt="29a56432-a80a-43e1-b80c-28b5c3623822"></p>
+<p>在 icon 下加上对应的仓库</p>
+<h4 id="打包成功和安装"><a href="#打包成功和安装" class="headerlink" title="打包成功和安装"></a>打包成功和安装</h4><p><img src="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/d49f30ff-7358-41e0-968c-7be0a0fc2c06.png" alt="d49f30ff-7358-41e0-968c-7be0a0fc2c06"></p>
+<p><img src="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/22b6bf6a-3aa5-424f-bff6-f8d9fad76706.png" alt="22b6bf6a-3aa5-424f-bff6-f8d9fad76706"></p>
+<h4 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h4><h5 id="默认生成的-package-json-里没有-publisher-需要加上-如果要发布到应用市场的话-这个名字必须与发布者一致"><a href="#默认生成的-package-json-里没有-publisher-需要加上-如果要发布到应用市场的话-这个名字必须与发布者一致" class="headerlink" title="默认生成的 package.json 里没有 publisher,需要加上,如果要发布到应用市场的话,这个名字必须与发布者一致"></a>默认生成的 package.json 里没有 publisher,需要加上,如果要发布到应用市场的话,这个名字必须与发布者一致</h5>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/" title="编写一个vscode插件" target="_blank" rel="external">https://ax-codes.github.io/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/GuoXingGitHub" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/GuoXingGitHub" target="_blank"><span class="text-dark">阿兴</span><small class="ml-1x">阿兴</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY2OC8xMTIwNQ==">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BAmysql%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/" title="批量导出mysql多个数据库结构和数据脚本"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/06/05/%E6%8A%80%E6%9C%AF/2020-06-05-antd%20webpack%20%E8%BF%90%E8%A1%8C%E6%97%B6%E5%88%87%E6%8D%A2%E4%B8%BB%E9%A2%98/" title="antd webpack 运行时切换主题"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>

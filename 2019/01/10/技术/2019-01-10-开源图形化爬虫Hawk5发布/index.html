@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>开源图形化爬虫Hawk5发布 | 阿兴的博客</title>
+  <meta name="description" content="前言项目主页:https:&#x2F;&#x2F;github.com&#x2F;ferventdesert&#x2F;Hawk项目文档: https:&#x2F;&#x2F;ferventdesert.github.io&#x2F;Hawk&#x2F;示例工程文件: https:&#x2F;&#x2F;github.com&#x2F;ferventdesert&#x2F;Hawk-Projects&#x2F;Hawk3下载地址: https:&#x2F;&#x2F;github.com&#x2F;ferventdesert&#x2F;Hawk&#x2F;releases国">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开源图形化爬虫Hawk5发布">
+<meta property="og:url" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/index.html">
+<meta property="og:site_name" content="阿兴的博客">
+<meta property="og:description" content="前言项目主页:https:&#x2F;&#x2F;github.com&#x2F;ferventdesert&#x2F;Hawk项目文档: https:&#x2F;&#x2F;ferventdesert.github.io&#x2F;Hawk&#x2F;示例工程文件: https:&#x2F;&#x2F;github.com&#x2F;ferventdesert&#x2F;Hawk-Projects&#x2F;Hawk3下载地址: https:&#x2F;&#x2F;github.com&#x2F;ferventdesert&#x2F;Hawk&#x2F;releases国">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/1.png">
+<meta property="og:image" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/2.png">
+<meta property="og:image" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/3.png">
+<meta property="og:image" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/4.png">
+<meta property="og:image" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/5.png">
+<meta property="og:image" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/6.png">
+<meta property="article:published_time" content="2019-01-10T02:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-09T10:00:01.733Z">
+<meta property="article:author" content="AX Blog">
+<meta property="article:tag" content="开发工具&#x2F;插件">
+<meta property="article:tag" content="csharp">
+<meta property="article:tag" content="效率工具&#x2F;插件">
+<meta property="article:tag" content="其他工具&#x2F;插件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/1.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="阿兴的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/GuoXingGitHub" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">阿兴</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">阿兴</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-musics">
+          <a href="/musics">
+            
+            <i class="icon icon-zcool"></i>
+            
+            <span class="menu-title">音乐</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于/留言</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">169</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-net-core/" rel="tag">.net/.net core</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/csharp/" rel="tag">csharp</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c%E8%AF%AD%E8%A8%80/" rel="tag">c语言</a><span class="tag-list-count">32</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">23</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web%E5%89%8D%E7%AB%AF/" rel="tag">web前端</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">其他工具/插件</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">开发工具/插件</a><span class="tag-list-count">54</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" rel="tag">技术随笔</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">效率工具/插件</a><span class="tag-list-count">18</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" rel="tag">生活随笔</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/net-net-core/" style="font-size: 13.62px;">.net/.net core</a> <a href="/tags/c/" style="font-size: 13.38px;">c++</a> <a href="/tags/csharp/" style="font-size: 13.46px;">csharp</a> <a href="/tags/c%E8%AF%AD%E8%A8%80/" style="font-size: 13.85px;">c语言</a> <a href="/tags/docker/" style="font-size: 13.23px;">docker</a> <a href="/tags/js/" style="font-size: 13.92px;">js</a> <a href="/tags/linux/" style="font-size: 13.69px;">linux</a> <a href="/tags/python/" style="font-size: 13.77px;">python</a> <a href="/tags/web%E5%89%8D%E7%AB%AF/" style="font-size: 13.46px;">web前端</a> <a href="/tags/windows/" style="font-size: 13.62px;">windows</a> <a href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.31px;">其他工具/插件</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 14px;">开发工具/插件</a> <a href="/tags/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/" style="font-size: 13px;">技术随笔</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" style="font-size: 13.54px;">效率工具/插件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 13.15px;">数据库</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/" style="font-size: 13.08px;">生活随笔</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-linux%E4%B8%8B%E6%9F%A5%E7%9C%8BCPU%E7%9A%84%E6%80%BB%E6%A0%B8%E6%95%B0%E4%BB%A5%E5%8F%8A%E9%80%BB%E8%BE%91%E6%A0%B8%E6%95%B0/" class="title">linux下查看CPU的总核数以及逻辑核数</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/07/29/%E6%8A%80%E6%9C%AF/2020-07-29-%E6%89%B9%E9%87%8F%E5%AF%BC%E5%87%BAmysql%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E8%84%9A%E6%9C%AC/" class="title">批量导出mysql多个数据库结构和数据脚本</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-07-29T12:00:00.000Z" itemprop="datePublished">2020-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/07/%E6%8A%80%E6%9C%AF/2020-06-07-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AAvscode%E6%8F%92%E4%BB%B6/" class="title">编写一个vscode插件</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-07T12:00:00.000Z" itemprop="datePublished">2020-06-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/06/05/%E6%8A%80%E6%9C%AF/2020-06-05-antd%20webpack%20%E8%BF%90%E8%A1%8C%E6%97%B6%E5%88%87%E6%8D%A2%E4%B8%BB%E9%A2%98/" class="title">antd webpack 运行时切换主题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-06-05T12:00:00.000Z" itemprop="datePublished">2020-06-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+              </p>
+              <p class="item-title">
+                <a href="/2020/05/25/%E6%8A%80%E6%9C%AF/2020-05-25-ubuntu%E5%AE%89%E8%A3%85airflow/" class="title">ubuntu安装airflow</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-05-25T12:00:00.000Z" itemprop="datePublished">2020-05-25</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hawk特点"><span class="toc-number">3.</span> <span class="toc-text">Hawk特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#断点续跑和自动保存"><span class="toc-number">4.</span> <span class="toc-text">断点续跑和自动保存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自动回补数据"><span class="toc-number">5.</span> <span class="toc-text">自动回补数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超级文档-自动更新和多国语言"><span class="toc-number">6.</span> <span class="toc-text">超级文档,自动更新和多国语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局参数"><span class="toc-number">7.</span> <span class="toc-text">全局参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试系统和UI交互改进"><span class="toc-number">8.</span> <span class="toc-text">调试系统和UI交互改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#社会化协作-任务市场"><span class="toc-number">9.</span> <span class="toc-text">社会化协作:任务市场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无限想象-自动抢票-翻译-图片识别…"><span class="toc-number">10.</span> <span class="toc-text">无限想象:自动抢票,翻译,图片识别…</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-技术/2019-01-10-开源图形化爬虫Hawk5发布" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      开源图形化爬虫Hawk5发布
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/" class="article-date">
+	  <time datetime="2019-01-10T02:00:00.000Z" itemprop="datePublished">2019-01-10</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/csharp/" rel="tag">csharp</a>, <a class="article-tag-link" href="/tags/%E5%85%B6%E4%BB%96%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">其他工具/插件</a>, <a class="article-tag-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">开发工具/插件</a>, <a class="article-tag-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7-%E6%8F%92%E4%BB%B6/" rel="tag">效率工具/插件</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>项目主页:<a href="https://github.com/ferventdesert/Hawk" target="_blank" rel="noopener">https://github.com/ferventdesert/Hawk</a><br>项目文档: <a href="https://ferventdesert.github.io/Hawk/" target="_blank" rel="noopener">https://ferventdesert.github.io/Hawk/</a><br>示例工程文件: <a href="https://github.com/ferventdesert/Hawk-Projects/Hawk3" target="_blank" rel="noopener">https://github.com/ferventdesert/Hawk-Projects/Hawk3</a><br>下载地址: <a href="https://github.com/ferventdesert/Hawk/releases" target="_blank" rel="noopener">https://github.com/ferventdesert/Hawk/releases</a><br>国内下载地址: <a href="https://gitee.com/deserthawk/Hawk/attach_files" target="_blank" rel="noopener">https://gitee.com/deserthawk/Hawk/attach_files</a></p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Hawk的含义为“鹰”,能够高效,准确地捕杀猎物.它的思想来源于Lisp语言,功能模仿了Linux工具awk.</p>
+<p>（Hawk尚未正式发布,本文只做功能性预览和内测使用）</p>
+<p>Hawk是一款开源图形化的爬虫和数据清洗工具,GitHub Star超过2k+,如果没有听过Hawk,可以查看以下文章介绍:</p>
+<p>Hawk3: 终于等到你: 图形化开源爬虫Hawk 3发布!</p>
+<p>Hawk2: 120项优化: 超级爬虫Hawk 2.0重磅发布!</p>
+<p>Hawk1: 如何从互联网采集海量数据？租房,二手房,薪酬…</p>
+<p>Hawk从2015年开发至今,已经经历三个版本,但是Hawk5则带来了其历史上最大的一次更新,解决了之前困扰的问题,并提供了社区化的任务市场,多国语言和更强大的调试系统. 因此作者决定直接跳过Hawk4,发布Hawk5.</p>
+<p>Hawk5欢迎界面<br><img src="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/1.png" alt="1.png"></p>
+<p>那么Hawk5带来哪些让人兴奋的更新呢？ 大招在最后!</p>
+<h3 id="Hawk特点"><a href="#Hawk特点" class="headerlink" title="Hawk特点"></a>Hawk特点</h3><p>C#编写<br>智能分析网页内容,无需编程<br>所见即所得,可视化拖拽,快地实现转换和过滤等数据清洗操作<br>能从各类数据库和文件实现导入导出<br>任务可以被保存和复用<br>其最适合的领域是爬虫和数据清洗,但其威力远超于此</p>
+<h3 id="断点续跑和自动保存"><a href="#断点续跑和自动保存" class="headerlink" title="断点续跑和自动保存"></a>断点续跑和自动保存</h3><p>早期Hawk会有诸多的不稳定,导致用户正在编辑任务或处理数据时,Hawk扑街了!</p>
+<p>Hawk5除了自动保存任务的功能,还能保存当前的数据表,甚至执行的位置!一旦关闭软件或遇到崩溃, 不仅历史抓取的数据还在,甚至重启后,任务还能继续从上次断掉的位置继续跑!颤抖吧筒子们!</p>
+<h3 id="自动回补数据"><a href="#自动回补数据" class="headerlink" title="自动回补数据"></a>自动回补数据</h3><p>这是另一革命性功能,在访问网站或其他操作时经常会遇到超时,不可访问等异常,想一次性不重不漏地获取全部数据是非常困难的.</p>
+<p>Hawk5支持了批量补数据功能,当发生异常时,Hawk会记录异常所处的任务位置和上下文,并写入一张数据表.之后Hawk即可智能地重新执行出现错误的位置,将数据不重不漏地回补回来,如下图所示:</p>
+<h3 id="超级文档-自动更新和多国语言"><a href="#超级文档-自动更新和多国语言" class="headerlink" title="超级文档,自动更新和多国语言"></a>超级文档,自动更新和多国语言</h3><p>Hawk5中,帮助文档获得了极大的增强（这个“极大”用的一点都不夸张）,除了丰富和细致到令人发指的在线文档:</p>
+<p><a href="https://ferventdesert.github.io/Hawk/" target="_blank" rel="noopener">https://ferventdesert.github.io/Hawk/</a><br><img src="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/2.png" alt="2.png"></p>
+<p>还提供了内置的文档,各个模块下方都有图文并茂的说明,当你不知道该按钮的作用时,鼠标放在该按钮上保持3秒,就有详细的说明.</p>
+<p>更令人开心的是,当你设计完一个任务后,一键即可生成该任务的手把手帮助文档,新手用户按部就班即可重现你的奇思妙想!</p>
+<p>Hawk5进一步地提供了多国语言功能,能方便地在中文,English或其他任何语言切换,只要在执行目录增加对应的语言文件即可!</p>
+<p>同时,Hawk的自动更新机制,能够让迭代更加敏捷,有新版本的Hawk即可一键更新,妈妈再也不用担心Hawk出现bug了!</p>
+<h3 id="全局参数"><a href="#全局参数" class="headerlink" title="全局参数"></a>全局参数</h3><p>早期的Hawk,涉及到多个任务间协同时会非常复杂,即使有子任务系统的加持也不能好转.</p>
+<p>Hawk5中设计了全局参数系统,你能在任何任务的任何模块中,使用大括号引用你已经配置的参数,并能在多个参数组间切换.<br><img src="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/3.png" alt="3.png"></p>
+<p>这有什么用呢？举个栗子,当二手房抓取时,每个城市们页面格式和地址都不相同, 那么就需要改很多参数,使用全局参数后,切换当前配置组并刷新,即可在多个城市间任意切换!</p>
+<h3 id="调试系统和UI交互改进"><a href="#调试系统和UI交互改进" class="headerlink" title="调试系统和UI交互改进"></a>调试系统和UI交互改进</h3><p>早期的Hawk遇到配置错误时,一条数据都出不来,卡住的不仅是Hawk,还有用户的心.</p>
+<p>Hawk5为此增加更加高效和方便的调试系统,每个模块是否正常工作,会以绿色方格提醒,一目了然.当任务中间有某个模块有异常时,还能触发提示.</p>
+<p>超级拷贝功能,使得可以通过shift键,选择多个算子模块,并在多个任务间来回拷贝.你甚至还能将Hawk自动嗅探出的XPath信息一键拷贝为python代码,极大地简化爬虫工程师的工作!<br><img src="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/4.png" alt="4.png"></p>
+<p>是否已经被网站封锁？总共进行了多少次请求？全局统计系统能够方便的显示当前总的web请求数,异常数,超时数,当错误数达到阈值时,更能自动暂停所有的任务!<br><img src="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/5.png" alt="5.png"></p>
+<p>Hawk内置了埋点系统,当系统出现问题时,会自动上传错误堆栈到远程日志服务中,方便开发者定位问题.</p>
+<p>除此之外,新版的Hawk更是改进了UI设计,例如XPath转换器,能够通过关键字快速定位,几次点选即可获取真实XPath.</p>
+<h3 id="社会化协作-任务市场"><a href="#社会化协作-任务市场" class="headerlink" title="社会化协作:任务市场"></a>社会化协作:任务市场</h3><p>以前所有的Hawk用户只能各自为政,无法共享,学习和沟通.</p>
+<p>在新的Hawk中,你可以浏览和搜索线上任务市场,在软件中直接加载远程任务,直接浏览数据,并在高层方便地组合和调用其他人写的任务.像BT站一样,作者发布爬虫和数据清洗任务后,所有的Hawk用户就会立即受益!<br><img src="/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/6.png" alt="6.png"><br>以前想抓取全国二手房数据异常复杂,且网站改版后就不能使用.而Hawk市场只要轻轻点击加载市场任务,即可在全国所有二手房数据中切换,并随时增加自己的修改,所见即所得,一键拉回本地.</p>
+<p>这是Hawk本次更新最重要的功能,它极大地改善了Hawk社会化协作属性,它依赖于GitHub,并可配置任务源.由于账号系统的限制,目前还不能在软件中直接上传任务,如果你希望向主仓库贡献任务,可提交git的pull request.本功能将会在未来的版本中提供.</p>
+<p>在AI时代,通过大量用户使用Hawk的行为和任务市场的积累,我们能够通过强化学习等技术,自动让AI学出自动的数据清洗和转换服务,让Hawk变得更加智能.</p>
+<h3 id="无限想象-自动抢票-翻译-图片识别…"><a href="#无限想象-自动抢票-翻译-图片识别…" class="headerlink" title="无限想象:自动抢票,翻译,图片识别…"></a>无限想象:自动抢票,翻译,图片识别…</h3><p>如果你只以为Hawk就是个爬虫,那就错了,Hawk是个通用的流式计算客户端.未来Hawk市场,不仅会有共享的任务,更会引入第三方插件机制,极大地扩展Hawk流式计算的版图.</p>
+<p>目前正在开发中的浏览器驱动插件,能够让Hawk自动控制浏览器,模拟点击,翻页等一系列操作,你要做的只是做一遍后导入到Hawk.通过配置数据清洗流,能够实现自动抢票,键盘输入等一系列功能.</p>
+<p>未来的插件能够更方便地调用百度识图,翻译转换以及各类服务存储API,让更多用户能够通过Hawk拖拽就能实现丰富的数据处理,并导出成任何格式.</p>
+<p>我们对Hawk的理念,是开源,去中心化和社会化协作.它没有公司去运营,没有中心服务器,只依赖了免费的GitHub仓库,使用文档和教程都是机器自动生成的.但它也在各种艰难中一路走来,但我们对Hawk的愿景是让数据流变得更加智能,让数据工作者变得更加地敏捷方便.</p>
+<p>感谢阅读,如果Hawk给你提供了帮助,欢迎转发本文给更多的朋友,并欢迎给本项目的GitHub点个star!</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/" title="开源图形化爬虫Hawk5发布" target="_blank" rel="external">https://ax-codes.github.io/2019/01/10/%E6%8A%80%E6%9C%AF/2019-01-10-%E5%BC%80%E6%BA%90%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%88%AC%E8%99%ABHawk5%E5%8F%91%E5%B8%83/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/GuoXingGitHub" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/GuoXingGitHub" target="_blank"><span class="text-dark">阿兴</span><small class="ml-1x">阿兴</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY2OC8xMTIwNQ==">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/01/10/%E6%8A%80%E6%9C%AF/2020-01-10-nodejs%20await%20%E6%8C%89%E8%A1%8C%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE/" title="nodejs await 按行读取数据"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/01/02/%E6%8A%80%E6%9C%AF/2019-01-02-%E5%9C%A8github%20pages%E9%87%8C%E9%85%8D%E7%BD%AE%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D/" title="在github pages里配置自己的域名"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/GuoXingGitHub" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+    
+    
+        
+<script defer src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>
